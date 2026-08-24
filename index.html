@@ -20,8 +20,26 @@
     --text:      #E8EDF5;
     --muted:     #8294B0;
     --success:   #34D399;
+    --header-bg: rgba(12,18,32,0.85);
     --radius:    14px;
   }
+
+  html[data-theme="light"] {
+    --bg:        #F5F7FB;
+    --surface:   #FFFFFF;
+    --card:      #FFFFFF;
+    --card-hover:#F0F4FA;
+    --border:    #E1E7F0;
+    --accent:    #4F8EF7;
+    --accent2:   #2E6FE0;
+    --text:      #101828;
+    --muted:     #5B6B85;
+    --success:   #0EA972;
+    --header-bg: rgba(255,255,255,0.85);
+  }
+
+  html, body { transition: background 0.25s ease, color 0.25s ease; }
+  body * { transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease; }
 
   html { scroll-behavior: smooth; }
 
@@ -36,7 +54,7 @@
   /* ── Header ── */
   header {
     border-bottom: 1px solid var(--border);
-    background: rgba(12,18,32,0.85);
+    background: var(--header-bg);
     backdrop-filter: blur(12px);
     position: sticky;
     top: 0;
@@ -75,12 +93,50 @@
 
   .logo-icon svg { width: 18px; height: 18px; }
 
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
   .header-meta {
     font-size: 0.78rem;
     color: var(--muted);
     display: flex;
     align-items: center;
     gap: 6px;
+  }
+
+  /* ── Theme toggle ── */
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 4px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .theme-toggle-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 11px;
+    border-radius: 22px;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--muted);
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .theme-toggle-option svg { width: 13px; height: 13px; }
+
+  .theme-toggle-option.active {
+    background: var(--accent);
+    color: #fff;
   }
 
   .live-dot {
@@ -182,6 +238,45 @@
     background: var(--border);
   }
 
+  /* ── Featured section label (Trainings) ── */
+  .section-label-featured {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: none;
+    margin-bottom: 1.5rem;
+    padding: 0.9rem 1.25rem;
+    border-radius: 14px;
+    background: linear-gradient(90deg, rgba(79,142,247,0.16), rgba(123,179,255,0.08));
+    border: 1px solid rgba(79,142,247,0.35);
+    color: var(--text);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-label-featured::after {
+    background: none;
+    flex: 0;
+  }
+
+  .section-label-featured .spark {
+    display: inline-flex;
+    margin-right: 8px;
+  }
+
+  .section-label-featured .spark svg {
+    width: 20px;
+    height: 20px;
+    vertical-align: -4px;
+  }
+
+  .section-label-featured span.gradient-text {
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
   .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -259,6 +354,20 @@
     background: rgba(52,211,153,0.07);
   }
 
+  .badge-locked {
+    color: #F87171;
+    border-color: rgba(248,113,113,0.3);
+    background: rgba(248,113,113,0.07);
+  }
+
+  .locked-card::before {
+    background: linear-gradient(90deg, #F87171, #FB923C);
+  }
+
+  .locked-card:hover {
+    border-color: #F87171;
+  }
+
   .pulse {
     width: 6px; height: 6px;
     border-radius: 50%;
@@ -296,6 +405,15 @@
     border: 1px solid rgba(79,142,247,0.2);
   }
 
+  /* ── Locked cards ── */
+  .badge-locked {
+    color: #FBBF24;
+    border-color: rgba(251,191,36,0.3);
+    background: rgba(251,191,36,0.07);
+  }
+
+  .card.locked-card { cursor: pointer; }
+
   .card-footer {
     display: flex;
     align-items: center;
@@ -314,6 +432,115 @@
     font-weight: 500;
     font-size: 0.8rem;
   }
+
+  /* ── Password Modal ── */
+  #password-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(6,10,18,0.75);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 500;
+    padding: 1.5rem;
+  }
+
+  #password-overlay.open { display: flex; }
+
+  .password-modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 360px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+    animation: modal-pop 0.2s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  @keyframes modal-pop {
+    from { transform: scale(0.92) translateY(10px); opacity: 0; }
+    to   { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+  .password-modal-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(248,113,113,0.12);
+    display: grid;
+    place-items: center;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+  }
+
+  .password-modal h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.15rem;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+  }
+
+  .password-modal p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 1.25rem;
+  }
+
+  #password-input {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    padding: 0.75rem 1rem;
+    outline: none;
+    text-align: center;
+    transition: border-color 0.15s;
+    margin-bottom: 0.75rem;
+  }
+
+  #password-input:focus { border-color: var(--accent); }
+
+  #password-error {
+    font-size: 0.78rem;
+    color: #F87171;
+    margin-bottom: 0.75rem;
+    min-height: 1em;
+  }
+
+  .password-modal-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .password-btn {
+    flex: 1;
+    padding: 0.65rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .password-btn-cancel {
+    background: transparent;
+    color: var(--muted);
+  }
+
+  .password-btn-cancel:hover { border-color: var(--muted); color: var(--text); }
+
+  .password-btn-submit {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  .password-btn-submit:hover { background: var(--accent2); }
 
   /* ── Chatbot ── */
   #chat-fab {
@@ -529,9 +756,21 @@
       </div>
       EduLink Reports
     </a>
-    <div class="header-meta">
-      <span class="live-dot"></span>
-      All dashboards live
+    <div class="header-right">
+      <div class="theme-toggle" id="theme-toggle">
+        <span class="theme-toggle-option" id="theme-dark-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          Dark
+        </span>
+        <span class="theme-toggle-option" id="theme-light-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          Light
+        </span>
+      </div>
+      <div class="header-meta">
+        <span class="live-dot"></span>
+        All dashboards live
+      </div>
     </div>
   </div>
 </header>
@@ -545,7 +784,7 @@
 
 <!-- ── Stats bar ── -->
 <div class="stats-bar">
-  <div class="stat"><span class="live-dot"></span> <strong>3</strong> Active Dashboards</div>
+  <div class="stat"><span class="live-dot"></span> <strong>6</strong> Active Dashboards</div>
   <div class="stat">📊 <strong>PowerBI · GitHub Pages</strong></div>
   <div class="stat">🔄 Updated regularly</div>
 </div>
@@ -645,8 +884,159 @@
       </div>
     </a>
 
+    <!-- Card 4 -->
+    <a class="card" href="https://aci-edulink.github.io/distributor-sales-trend/" target="_blank" rel="noopener">
+      <div class="card-head">
+        <div class="card-icon" style="background:rgba(167,139,250,0.12);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.1-2.8-2.8L7 14"/>
+          </svg>
+        </div>
+        <div class="card-badge badge-live"><span class="pulse"></span> Live</div>
+      </div>
+      <div class="card-body">
+        <h2>Distributor Sales Trend</h2>
+        <p>Track distributor-wise sales performance and trends over time to spot growth areas and underperforming regions.</p>
+      </div>
+      <div class="card-tags">
+        <span class="tag">Sales</span>
+        <span class="tag">Distributors</span>
+        <span class="tag">Trends</span>
+      </div>
+      <div class="card-footer">
+        <span>aci-edulink.github.io</span>
+        <span class="card-footer-action">
+          Open report
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- Card 5 (Password Protected) -->
+    <a class="card locked-card" href="https://aci-edulink.github.io/profit-loss-VH-analysis/" data-locked="true" target="_blank" rel="noopener">
+      <div class="card-head">
+        <div class="card-icon" style="background:rgba(248,113,113,0.12);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m6.08 6.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m6.08-6.08l4.24-4.24"/>
+          </svg>
+        </div>
+        <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> Restricted</div>
+      </div>
+      <div class="card-body">
+        <h2>Profit & Loss – VH Analysis</h2>
+        <p>Detailed profit and loss breakdown by vertical head — financial performance analysis across business units.</p>
+      </div>
+      <div class="card-tags">
+        <span class="tag">Finance</span>
+        <span class="tag">P&amp;L</span>
+        <span class="tag">Confidential</span>
+      </div>
+      <div class="card-footer">
+        <span>aci-edulink.github.io</span>
+        <span class="card-footer-action">
+          Enter password
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- Card 6 (Password Protected) -->
+    <a class="card locked-card" href="https://aci-edulink.github.io/Stock-ZSM-Sales-COGS-GP-/" data-locked="true" target="_blank" rel="noopener">
+      <div class="card-head">
+        <div class="card-icon" style="background:rgba(248,113,113,0.12);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m6.08 6.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m6.08-6.08l4.24-4.24"/>
+          </svg>
+        </div>
+        <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> Restricted</div>
+      </div>
+      <div class="card-body">
+        <h2>Stock, ZSM Sales, COGS &amp; GP</h2>
+        <p>Zone Sales Manager performance with stock levels, cost of goods sold, and gross profit analysis by zone.</p>
+      </div>
+      <div class="card-tags">
+        <span class="tag">Stock</span>
+        <span class="tag">COGS</span>
+        <span class="tag">Confidential</span>
+      </div>
+      <div class="card-footer">
+        <span>aci-edulink.github.io</span>
+        <span class="card-footer-action">
+          Enter password
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
   </div>
 </section>
+
+<!-- ── Upcoming Trainings Section ── -->
+<section class="grid-section">
+  <div class="section-label section-label-featured">
+    <span class="spark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="url(#sparkGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <defs><linearGradient id="sparkGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4F8EF7"/><stop offset="100%" stop-color="#7BB3FF"/></linearGradient></defs>
+        <path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2z"/>
+      </svg>
+    </span>
+    <span class="gradient-text">Upcoming AI &amp; Other Trainings for Team!</span>
+  </div>
+  <div class="dashboard-grid">
+
+    <!-- Training Card -->
+    <a class="card" href="https://aci-edulink.github.io/Notion-AI-Trainings/" target="_blank" rel="noopener">
+      <div class="card-head">
+        <div class="card-icon" style="background:rgba(79,142,247,0.12);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4F8EF7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="card-badge badge-live"><span class="pulse"></span> Live</div>
+      </div>
+      <div class="card-body">
+        <h2>Notion &amp; AI Trainings</h2>
+        <p>Learning resources and training materials to help the team get up to speed on Notion and AI tools.</p>
+      </div>
+      <div class="card-tags">
+        <span class="tag">Training</span>
+        <span class="tag">Notion</span>
+        <span class="tag">AI</span>
+      </div>
+      <div class="card-footer">
+        <span>aci-edulink.github.io</span>
+        <span class="card-footer-action">
+          Open resource
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- ── Password Modal ── -->
+<div id="password-overlay">
+  <div class="password-modal">
+    <div class="password-modal-icon">🔒</div>
+    <h3>Restricted Report</h3>
+    <p>This dashboard contains confidential data. Enter the access code to continue.</p>
+    <input type="password" id="password-input" placeholder="••••" inputmode="numeric" maxlength="10" />
+    <div id="password-error"></div>
+    <div class="password-modal-actions">
+      <button class="password-btn password-btn-cancel" id="password-cancel">Cancel</button>
+      <button class="password-btn password-btn-submit" id="password-submit">Unlock</button>
+    </div>
+  </div>
+</div>
 
 <!-- ── Chat FAB ── -->
 <button id="chat-fab" title="Ask about dashboards" aria-label="Open chat assistant">
@@ -675,7 +1065,7 @@
   </div>
 
   <div id="chat-messages">
-    <div class="msg bot">Hi! 👋 I can answer questions about the <strong>PowerBI Report</strong>, <strong>Stock Intelligence</strong>, and <strong>Product Velocity</strong> dashboards. What would you like to know?</div>
+    <div class="msg bot">Hi! 👋 I can help you navigate all the reports here — I have live data access to <strong>Stock Intelligence</strong>, and can point you to the right dashboard for anything else. What would you like to know?</div>
   </div>
 
   <div class="chat-input-row">
@@ -689,27 +1079,72 @@
 </div>
 
 <script>
-// ── Dashboard context passed to the AI ──
-const DASHBOARD_CONTEXT = `
-You are a helpful assistant for the EduLink Reports Hub — an internal company dashboard portal.
-You help employees understand and navigate three published dashboards:
+// ── Theme toggle ──
+const htmlEl = document.documentElement;
+const darkBtn = document.getElementById('theme-dark-btn');
+const lightBtn = document.getElementById('theme-light-btn');
 
-1. PowerBI Report (https://edulink-reports.github.io/powerbi-report/)
-   - Core business intelligence dashboard
-   - Tracks KPIs, performance indicators, and operational insights across the organisation
+function applyTheme(theme) {
+  if (theme === 'light') {
+    htmlEl.setAttribute('data-theme', 'light');
+    lightBtn.classList.add('active');
+    darkBtn.classList.remove('active');
+  } else {
+    htmlEl.removeAttribute('data-theme');
+    darkBtn.classList.add('active');
+    lightBtn.classList.remove('active');
+  }
+  try { localStorage.setItem('edulink-theme', theme); } catch (e) {}
+}
 
-2. Stock Intelligence (https://edulink-reports.github.io/stock-intelligence/)
-   - Inventory and stock management dashboard
-   - Monitors stock levels, turnover rates, and supply chain signals
+let savedTheme = 'dark';
+try { savedTheme = localStorage.getItem('edulink-theme') || 'dark'; } catch (e) {}
+applyTheme(savedTheme);
 
-3. Product Velocity (https://edulink-reports.github.io/product-velocity/)
-   - Product movement and demand dashboard
-   - Identifies fastest and slowest moving products, demand trends, throughput
+darkBtn.addEventListener('click', () => applyTheme('dark'));
+lightBtn.addEventListener('click', () => applyTheme('light'));
 
-Keep responses concise and helpful. If asked what dashboards are available, list all three with their focus area.
-If asked about specific data or numbers you can't know, suggest opening the relevant dashboard link.
-Be friendly and professional.
-`;
+// ── Password-protected report links ──
+const REPORT_PASSWORD = "7792";
+let pendingUrl = null;
+
+document.querySelectorAll('.locked-card').forEach(card => {
+  card.addEventListener('click', function (e) {
+    e.preventDefault();
+    pendingUrl = this.getAttribute('href');
+    document.getElementById('password-input').value = '';
+    document.getElementById('password-error').textContent = '';
+    document.getElementById('password-overlay').classList.add('open');
+    setTimeout(() => document.getElementById('password-input').focus(), 100);
+  });
+});
+
+function closePasswordModal() {
+  document.getElementById('password-overlay').classList.remove('open');
+  pendingUrl = null;
+}
+
+function submitPassword() {
+  const entered = document.getElementById('password-input').value.trim();
+  if (entered === REPORT_PASSWORD) {
+    const url = pendingUrl;
+    closePasswordModal();
+    if (url) window.open(url, '_blank', 'noopener');
+  } else {
+    document.getElementById('password-error').textContent = 'Incorrect password. Please try again.';
+    document.getElementById('password-input').value = '';
+    document.getElementById('password-input').focus();
+  }
+}
+
+document.getElementById('password-cancel').addEventListener('click', closePasswordModal);
+document.getElementById('password-submit').addEventListener('click', submitPassword);
+document.getElementById('password-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') submitPassword();
+});
+document.getElementById('password-overlay').addEventListener('click', e => {
+  if (e.target.id === 'password-overlay') closePasswordModal();
+});
 
 // ── Chat state ──
 const history = [];
@@ -782,24 +1217,31 @@ async function sendMessage() {
   const typing = showTyping();
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/.netlify/functions/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
-        system: DASHBOARD_CONTEXT,
-        messages: history
-      })
+      body: JSON.stringify({ messages: history })
     });
 
     const data = await response.json();
-    const reply = data?.content?.[0]?.text || 'Sorry, I couldn\'t get a response. Please try again.';
 
     removeTyping();
+
+    if (!response.ok) {
+      const errMsg = data?.error || 'Unknown error';
+      if (errMsg.includes('API key not configured')) {
+        addMessage('⚙️ <strong>Setup needed:</strong> Add your <code>GEMINI_API_KEY</code> in Netlify → Site Settings → Environment Variables, then redeploy.', 'bot');
+      } else {
+        addMessage('⚠️ Error: ' + errMsg, 'bot');
+      }
+      document.getElementById('send-btn').disabled = false;
+      input.focus();
+      return;
+    }
+
+    const reply = data.reply || 'Sorry, I couldn\'t get a response. Please try again.';
     history.push({ role: 'assistant', content: reply });
 
-    // Simple markdown-like formatting
     const formatted = reply
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\n/g, '<br/>');
@@ -807,7 +1249,7 @@ async function sendMessage() {
     addMessage(formatted, 'bot');
   } catch (err) {
     removeTyping();
-    addMessage('⚠️ Connection error. Please check your network and try again.', 'bot');
+    addMessage('⚠️ Could not reach the assistant. Please try again shortly.', 'bot');
     console.error(err);
   }
 
