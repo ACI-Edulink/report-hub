@@ -915,7 +915,7 @@
     </a>
 
     <!-- Card 5 (Password Protected) -->
-    <a class="card locked-card" href="https://aci-edulink.github.io/profit-loss-VH-analysis/" data-locked="true" target="_blank" rel="noopener">
+    <a class="card locked-card" href="https://aci-edulink.github.io/profit-loss-VH-analysis/" data-locked="true" data-password="4010" target="_blank" rel="noopener">
       <div class="card-head">
         <div class="card-icon" style="background:rgba(248,113,113,0.12);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -945,7 +945,7 @@
     </a>
 
     <!-- Card 6 (Password Protected) -->
-    <a class="card locked-card" href="https://aci-edulink.github.io/Zonewise-sales-GP/" data-locked="true" target="_blank" rel="noopener">
+    <a class="card locked-card" href="https://aci-edulink.github.io/Zonewise-sales-GP/" data-locked="true" data-password="4010" target="_blank" rel="noopener">
       <div class="card-head">
         <div class="card-icon" style="background:rgba(248,113,113,0.12);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1105,13 +1105,15 @@ darkBtn.addEventListener('click', () => applyTheme('dark'));
 lightBtn.addEventListener('click', () => applyTheme('light'));
 
 // ── Password-protected report links ──
-const REPORT_PASSWORD = "7792";
+const DEFAULT_PASSWORD = "7792";
 let pendingUrl = null;
+let pendingPassword = null;
 
 document.querySelectorAll('.locked-card').forEach(card => {
   card.addEventListener('click', function (e) {
     e.preventDefault();
     pendingUrl = this.getAttribute('href');
+    pendingPassword = this.getAttribute('data-password') || DEFAULT_PASSWORD;
     document.getElementById('password-input').value = '';
     document.getElementById('password-error').textContent = '';
     document.getElementById('password-overlay').classList.add('open');
@@ -1122,11 +1124,12 @@ document.querySelectorAll('.locked-card').forEach(card => {
 function closePasswordModal() {
   document.getElementById('password-overlay').classList.remove('open');
   pendingUrl = null;
+  pendingPassword = null;
 }
 
 function submitPassword() {
   const entered = document.getElementById('password-input').value.trim();
-  if (entered === REPORT_PASSWORD) {
+  if (entered === pendingPassword) {
     const url = pendingUrl;
     closePasswordModal();
     if (url) window.open(url, '_blank', 'noopener');
