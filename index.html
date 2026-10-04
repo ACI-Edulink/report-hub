@@ -693,6 +693,22 @@
     flex-shrink: 0;
   }
 
+  .passbot-list li { flex-wrap: wrap; }
+
+  .passbot-login {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--border);
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .passbot-login code { letter-spacing: 0.05em; font-size: 0.85rem; }
+
   @keyframes fadein { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
 </style>
 </head>
@@ -878,7 +894,7 @@
     </a>
 
     <!-- Card 5 (Password Protected) -->
-    <a class="card locked-card" href="https://aci-edulink.github.io/profit-loss-VH-analysis/" data-locked="true" data-vip="true" data-password="2026" target="_blank" rel="noopener">
+    <a class="card locked-card" href="https://aci-edulink.github.io/profit-loss-VH-analysis/" data-locked="true" data-vip="true" data-password="2026" data-login-id="edulink" data-login-pass="deli2026" target="_blank" rel="noopener">
       <div class="card-head">
         <div class="card-icon" style="background:rgba(248,113,113,0.12);">
           <svg viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1118,6 +1134,16 @@ function renderPassbotList() {
     const code = document.createElement('code');
     code.textContent = card.getAttribute('data-password') || DEFAULT_PASSWORD;
     li.append(title, code);
+    if (card.dataset.loginId) {
+      const login = document.createElement('div');
+      login.className = 'passbot-login';
+      const id = document.createElement('code');
+      id.textContent = card.dataset.loginId;
+      const pass = document.createElement('code');
+      pass.textContent = card.dataset.loginPass;
+      login.append('ID:', id, 'Pass:', pass);
+      li.appendChild(login);
+    }
     passbotList.appendChild(li);
   });
 }
