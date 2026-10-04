@@ -740,6 +740,149 @@
     #chat-panel { right: 1rem; left: 1rem; width: auto; }
     #chat-fab { right: 1.25rem; bottom: 1.25rem; }
   }
+
+  /* ── Passcode bot ── */
+  #passbot-btn {
+    position: fixed;
+    right: 1.25rem;
+    top: 50%;
+    z-index: 210;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px 8px 8px;
+    border: none;
+    border-radius: 40px;
+    background: linear-gradient(135deg, #7C5CFF, var(--accent));
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 28px rgba(124,92,255,0.45);
+    animation: passbot-float 3s ease-in-out infinite;
+  }
+
+  #passbot-btn:hover { animation-play-state: paused; filter: brightness(1.1); }
+
+  #passbot-btn::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 44px;
+    border: 2px solid rgba(124,92,255,0.6);
+    animation: passbot-ring 2s ease-out infinite;
+    pointer-events: none;
+  }
+
+  .passbot-face {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  .passbot-face svg { width: 22px; height: 22px; }
+  .passbot-face .eye { animation: passbot-blink 4s infinite; transform-origin: center; transform-box: fill-box; }
+
+  @keyframes passbot-float {
+    0%,100% { transform: translateY(-50%) rotate(0deg); }
+    25%     { transform: translateY(calc(-50% - 8px)) rotate(-2deg); }
+    75%     { transform: translateY(calc(-50% + 8px)) rotate(2deg); }
+  }
+
+  @keyframes passbot-ring {
+    0%   { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(1.18); }
+  }
+
+  @keyframes passbot-blink {
+    0%,92%,100% { transform: scaleY(1); }
+    96%         { transform: scaleY(0.1); }
+  }
+
+  #passbot-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(6,10,18,0.75);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 600;
+    padding: 1.5rem;
+  }
+
+  #passbot-overlay.open { display: flex; }
+
+  #passbot-overlay .password-modal { max-width: 420px; }
+
+  #passbot-overlay .password-modal-icon { background: rgba(124,92,255,0.15); }
+
+  #passbot-name {
+    width: 100%;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    outline: none;
+    margin-bottom: 0.75rem;
+  }
+
+  #passbot-name:focus { border-color: var(--accent); }
+
+  #passbot-error {
+    font-size: 0.78rem;
+    color: #F87171;
+    margin-bottom: 0.75rem;
+    min-height: 1em;
+  }
+
+  .passbot-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 1.25rem;
+  }
+
+  .passbot-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.6rem 0.85rem;
+    font-size: 0.83rem;
+    color: var(--text);
+  }
+
+  .passbot-list code {
+    font-family: 'DM Sans', monospace;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    color: var(--accent2);
+    background: rgba(79,142,247,0.1);
+    border: 1px solid rgba(79,142,247,0.25);
+    border-radius: 8px;
+    padding: 2px 10px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 600px) {
+    #passbot-btn { top: auto; bottom: 5.5rem; right: 1rem; }
+    @keyframes passbot-float {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-6px); }
+    }
+  }
 </style>
 </head>
 <body>
@@ -784,7 +927,7 @@
 
 <!-- ── Stats bar ── -->
 <div class="stats-bar">
-  <div class="stat"><span class="live-dot"></span> <strong>6</strong> Active Dashboards</div>
+  <div class="stat"><span class="live-dot"></span> <strong>5</strong> Active Dashboards</div>
   <div class="stat">📊 <strong>PowerBI · GitHub Pages</strong></div>
   <div class="stat">🔄 Updated regularly</div>
 </div>
@@ -794,24 +937,24 @@
   <div class="section-label">Published Reports</div>
   <div class="dashboard-grid" id="dashboard-grid">
 
-    <!-- Card 1 -->
-    <a class="card locked-card" href="https://aci-edulink.github.io/powerbi-report/" data-locked="true" target="_blank" rel="noopener">
+    <!-- Card 1 (Password Protected) -->
+    <a class="card locked-card" href="https://aci-edulink.github.io/zone-area-sku-sales/" data-locked="true" data-password="2026" target="_blank" rel="noopener">
       <div class="card-head">
-        <div class="card-icon" style="background:rgba(79,142,247,0.12);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#4F8EF7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        <div class="card-icon" style="background:rgba(248,113,113,0.12);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m6.08 6.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m6.08-6.08l4.24-4.24"/>
           </svg>
         </div>
         <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> Restricted</div>
       </div>
       <div class="card-body">
-        <h2>PowerBI Report</h2>
-        <p>Core business intelligence dashboard tracking key metrics, performance indicators, and operational insights across the organisation.</p>
+        <h2>Zone · Area · DB SKU Sales (Last 10M)</h2>
+        <p>Zone, Area &amp; Distributor-wise SKU-level sales for the last 10 months — with stock, COGS and gross profit.</p>
       </div>
       <div class="card-tags">
-        <span class="tag">BI Analytics</span>
-        <span class="tag">KPIs</span>
-        <span class="tag">Operations</span>
+        <span class="tag">SKU Sales</span>
+        <span class="tag">Zone · Area · DB</span>
+        <span class="tag">Confidential</span>
       </div>
       <div class="card-footer">
         <span>aci-edulink.github.io</span>
@@ -944,35 +1087,6 @@
       </div>
     </a>
 
-    <!-- Card 6 (Password Protected) -->
-    <a class="card locked-card" href="https://aci-edulink.github.io/zone-area-sku-sales/" data-locked="true" data-password="2026" target="_blank" rel="noopener">
-      <div class="card-head">
-        <div class="card-icon" style="background:rgba(248,113,113,0.12);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m6.08 6.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m6.08-6.08l4.24-4.24"/>
-          </svg>
-        </div>
-        <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> Restricted</div>
-      </div>
-      <div class="card-body">
-        <h2>Zonewise Sales &amp; GP</h2>
-        <p>Zone Sales Manager performance with stock levels, cost of goods sold, and gross profit analysis by zone.</p>
-      </div>
-      <div class="card-tags">
-        <span class="tag">Stock</span>
-        <span class="tag">COGS</span>
-        <span class="tag">Confidential</span>
-      </div>
-      <div class="card-footer">
-        <span>aci-edulink.github.io</span>
-        <span class="card-footer-action">
-          Enter password
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-        </span>
-      </div>
-    </a>
 
   </div>
 </section>
@@ -1064,6 +1178,42 @@
     <div class="password-modal-actions">
       <button class="password-btn password-btn-cancel" id="password-cancel">Cancel</button>
       <button class="password-btn password-btn-submit" id="password-submit">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Passcode Bot ── -->
+<button id="passbot-btn" aria-label="Ask me for passcode">
+  <span class="passbot-face">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#7C5CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1"/>
+      <circle class="eye" cx="9" cy="13" r="1.3" fill="#7C5CFF"/><circle class="eye" cx="15" cy="13" r="1.3" fill="#7C5CFF"/>
+      <path d="M9.5 17h5"/>
+    </svg>
+  </span>
+  Ask me For Passcode!
+</button>
+
+<div id="passbot-overlay">
+  <div class="password-modal">
+    <div class="password-modal-icon">🤖</div>
+    <div id="passbot-step-name">
+      <h3>Hi there! What's your name?</h3>
+      <p>Tell me your name and I'll share the access codes for the restricted reports.</p>
+      <input type="text" id="passbot-name" placeholder="Your name" autocomplete="off" />
+      <div id="passbot-error"></div>
+      <div class="password-modal-actions">
+        <button class="password-btn password-btn-cancel" data-passbot-close>Cancel</button>
+        <button class="password-btn password-btn-submit" id="passbot-submit">Continue</button>
+      </div>
+    </div>
+    <div id="passbot-step-codes" hidden>
+      <h3 id="passbot-greeting"></h3>
+      <p>Here are your passcodes:</p>
+      <ul class="passbot-list" id="passbot-list"></ul>
+      <div class="password-modal-actions">
+        <button class="password-btn password-btn-submit" data-passbot-close>Got it</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1178,6 +1328,64 @@ document.getElementById('password-input').addEventListener('keydown', e => {
 document.getElementById('password-overlay').addEventListener('click', e => {
   if (e.target.id === 'password-overlay') closePasswordModal();
 });
+
+// ── Passcode bot ──
+const PASSBOT_USERS = ['carl', 'zaki', 'alex', 'arif', 'shaheen', 'mehedi', 'adnan', 'quamrul', 'fahim', 'raju', 'tinney'];
+const passbotOverlay = document.getElementById('passbot-overlay');
+const passbotName = document.getElementById('passbot-name');
+const passbotError = document.getElementById('passbot-error');
+const passbotStepName = document.getElementById('passbot-step-name');
+const passbotStepCodes = document.getElementById('passbot-step-codes');
+
+function openPassbot() {
+  passbotName.value = '';
+  passbotError.textContent = '';
+  passbotStepName.hidden = false;
+  passbotStepCodes.hidden = true;
+  passbotOverlay.classList.add('open');
+  setTimeout(() => passbotName.focus(), 100);
+}
+
+function closePassbot() {
+  passbotOverlay.classList.remove('open');
+}
+
+function submitPassbotName() {
+  const raw = passbotName.value.trim();
+  const first = raw.split(/\s+/)[0].toLowerCase();
+  if (!raw) {
+    passbotError.textContent = 'Please enter your name.';
+    return;
+  }
+  if (!PASSBOT_USERS.includes(first)) {
+    passbotError.textContent = "Sorry, I don't have access codes for that name. Please contact the admin.";
+    return;
+  }
+
+  // Built from the cards so the list always matches the published reports
+  const list = document.getElementById('passbot-list');
+  list.innerHTML = '';
+  document.querySelectorAll('#dashboard-grid .locked-card').forEach(card => {
+    const li = document.createElement('li');
+    const title = document.createElement('span');
+    title.textContent = card.querySelector('h2').textContent;
+    const code = document.createElement('code');
+    code.textContent = card.getAttribute('data-password') || DEFAULT_PASSWORD;
+    li.append(title, code);
+    list.appendChild(li);
+  });
+
+  const display = first.charAt(0).toUpperCase() + first.slice(1);
+  document.getElementById('passbot-greeting').textContent = `Hi ${display}! 👋`;
+  passbotStepName.hidden = true;
+  passbotStepCodes.hidden = false;
+}
+
+document.getElementById('passbot-btn').addEventListener('click', openPassbot);
+document.getElementById('passbot-submit').addEventListener('click', submitPassbotName);
+passbotName.addEventListener('keydown', e => { if (e.key === 'Enter') submitPassbotName(); });
+document.querySelectorAll('[data-passbot-close]').forEach(b => b.addEventListener('click', closePassbot));
+passbotOverlay.addEventListener('click', e => { if (e.target === passbotOverlay) closePassbot(); });
 
 // ── Chat state ──
 const history = [];
