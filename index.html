@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>EduLink · Reports Hub</title>
 <meta name="description" content="All ACI Edulink dashboards in one place — SKU sales, stock intelligence, product velocity, distributor trends and P&amp;L." />
+<meta name="theme-color" content="#0C1220" />
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="EduLink Hub" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://aci-edulink.github.io/report-hub/" />
 <meta property="og:title" content="EduLink · Reports Hub" />
@@ -15,46 +22,64 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://aci-edulink.github.io/report-hub/og-preview.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --bg:        #0C1220;
+    --bg-radial: radial-gradient(1100px 600px at 12% -10%, rgba(79,142,247,0.16), transparent 60%),
+                 radial-gradient(900px 560px at 100% 0%, rgba(124,92,255,0.14), transparent 55%),
+                 #0C1220;
     --surface:   #131D30;
-    --card:      #19253D;
-    --card-hover:#1F2E48;
-    --border:    #263550;
+    --card:      rgba(25,37,61,0.55);
+    --card-solid:#19253D;
+    --card-hover:rgba(31,46,72,0.72);
+    --border:    rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.14);
     --accent:    #4F8EF7;
     --accent2:   #7BB3FF;
+    --violet:    #7C5CFF;
     --text:      #E8EDF5;
     --muted:     #8294B0;
     --success:   #34D399;
-    --header-bg: rgba(12,18,32,0.85);
-    --radius:    14px;
+    --header-bg: rgba(12,18,32,0.72);
+    --radius:    18px;
+    --glass-blur: 18px;
+    --shadow-card: 0 10px 30px rgba(0,0,0,0.35);
+    --shadow-card-hover: 0 20px 48px rgba(0,0,0,0.5);
   }
 
   html[data-theme="light"] {
-    --bg:        #F5F7FB;
+    --bg:        #F2F5FB;
+    --bg-radial: radial-gradient(1100px 600px at 12% -10%, rgba(79,142,247,0.10), transparent 60%),
+                 radial-gradient(900px 560px at 100% 0%, rgba(124,92,255,0.08), transparent 55%),
+                 #F2F5FB;
     --surface:   #FFFFFF;
-    --card:      #FFFFFF;
-    --card-hover:#F0F4FA;
-    --border:    #E1E7F0;
+    --card:      rgba(255,255,255,0.72);
+    --card-solid:#FFFFFF;
+    --card-hover:rgba(255,255,255,0.92);
+    --border:    rgba(16,24,40,0.08);
+    --border-strong: rgba(16,24,40,0.14);
     --accent:    #4F8EF7;
     --accent2:   #2E6FE0;
+    --violet:    #6D4CFF;
     --text:      #101828;
     --muted:     #5B6B85;
     --success:   #0EA972;
-    --header-bg: rgba(255,255,255,0.85);
+    --header-bg: rgba(255,255,255,0.72);
+    --shadow-card: 0 10px 28px rgba(16,24,40,0.08);
+    --shadow-card-hover: 0 20px 44px rgba(16,24,40,0.14);
   }
 
   html, body { transition: background 0.25s ease, color 0.25s ease; }
-  body * { transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease; }
+  body * { transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.25s ease; }
 
   html { scroll-behavior: smooth; }
 
   body {
-    background: var(--bg);
+    background: var(--bg-radial);
+    background-attachment: fixed;
     color: var(--text);
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
@@ -65,7 +90,8 @@
   header {
     border-bottom: 1px solid var(--border);
     background: var(--header-bg);
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     position: sticky;
     top: 0;
     z-index: 100;
@@ -73,7 +99,7 @@
   }
 
   .header-inner {
-    max-width: 1200px;
+    max-width: 1240px;
     margin: 0 auto;
     height: 64px;
     display: flex;
@@ -85,9 +111,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700;
-    font-size: 1.15rem;
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    font-size: 1.05rem;
     color: var(--text);
     text-decoration: none;
   }
@@ -95,13 +120,17 @@
   .logo-icon {
     width: 32px;
     height: 32px;
-    background: var(--accent);
-    border-radius: 8px;
+    background: linear-gradient(135deg, var(--accent), var(--violet));
+    border-radius: 9px;
     display: grid;
     place-items: center;
+    box-shadow: 0 4px 14px rgba(79,142,247,0.45);
   }
 
-  .logo-icon svg { width: 18px; height: 18px; }
+  .logo-text { letter-spacing: -0.01em; line-height: 1; }
+  .logo-text b { font-weight: 800; }
+  .logo-text span { font-weight: 500; color: var(--muted); }
+  .logo-img { width: 34px; height: 34px; border-radius: 9px; display: block; box-shadow: 0 4px 14px rgba(224,0,70,0.35); }
 
   .header-right {
     display: flex;
@@ -163,7 +192,7 @@
 
   /* ── Hero ── */
   .hero {
-    max-width: 1200px;
+    max-width: 1240px;
     margin: 0 auto;
     padding: 4rem 2rem 2.5rem;
   }
@@ -173,21 +202,33 @@
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--accent2);
     margin-bottom: 1rem;
+    text-shadow: 0 0 14px rgba(79,142,247,0.65), 0 0 28px rgba(79,142,247,0.35);
+    animation: eyebrow-glow 3.5s ease-in-out infinite;
+  }
+
+  @keyframes eyebrow-glow {
+    0%, 100% { text-shadow: 0 0 14px rgba(79,142,247,0.65), 0 0 28px rgba(79,142,247,0.35); }
+    50%      { text-shadow: 0 0 20px rgba(79,142,247,0.9), 0 0 38px rgba(79,142,247,0.5); }
   }
 
   .hero h1 {
     font-family: 'DM Sans', sans-serif;
     font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 700;
+    font-weight: 800;
     line-height: 1.15;
     margin-bottom: 0.75rem;
     color: var(--text);
   }
 
-  .hero h1 span {
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
+  .hero-greeting {
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  .hero h1 span.grad {
+    background: linear-gradient(90deg, var(--accent), var(--violet));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -200,19 +241,22 @@
 
   /* ── Stats bar ── */
   .stats-bar {
-    max-width: 1200px;
+    max-width: 1240px;
     margin: 0 auto;
     padding: 0 2rem 2.5rem;
     display: flex;
     gap: 1.5rem;
     flex-wrap: wrap;
+    align-items: center;
   }
 
   .stat {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: var(--surface);
+    background: var(--card);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--border);
     border-radius: 30px;
     padding: 6px 14px;
@@ -224,7 +268,7 @@
 
   /* ── Grid ── */
   .grid-section {
-    max-width: 1200px;
+    max-width: 1240px;
     margin: 0 auto;
     padding: 0 2rem 5rem;
   }
@@ -289,93 +333,125 @@
 
   .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
   }
 
-  /* ── Card ── */
+  /* ── Card (glass + glow) ── */
   .card {
-    background: var(--card);
+    background: var(--card-tint, var(--card));
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 1.5rem;
     text-decoration: none;
     color: inherit;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-    position: relative;
     overflow: hidden;
-  }
-
-  .card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    opacity: 0;
-    transition: opacity 0.2s;
+    position: relative;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s ease;
   }
 
   .card:hover {
-    background: var(--card-hover);
-    border-color: var(--accent);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.35);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-card-hover), 0 0 42px -6px rgba(79,142,247,0.4);
   }
 
-  .card:hover::before { opacity: 1; }
+  .locked-card:hover {
+    box-shadow: var(--shadow-card-hover), 0 0 42px -6px rgba(248,113,113,0.35);
+  }
 
-  .card-head {
+  /* ── Per-card accent tints: a colored glow caught at the bottom of the glass panel ── */
+  .card-tint-blue   { --card-tint: radial-gradient(130% 90% at 50% 125%, rgba(79,142,247,0.38), rgba(25,37,61,0) 70%), var(--card); }
+  .card-tint-green  { --card-tint: radial-gradient(130% 90% at 50% 125%, rgba(52,211,153,0.34), rgba(25,37,61,0) 70%), var(--card); }
+  .card-tint-orange { --card-tint: radial-gradient(130% 90% at 50% 125%, rgba(251,146,60,0.34), rgba(25,37,61,0) 70%), var(--card); }
+  .card-tint-violet { --card-tint: radial-gradient(130% 90% at 50% 125%, rgba(167,139,250,0.36), rgba(25,37,61,0) 70%), var(--card); }
+  .card-tint-red    { --card-tint: radial-gradient(130% 90% at 50% 125%, rgba(248,113,113,0.34), rgba(25,37,61,0) 70%), var(--card); }
+
+  html[data-theme="light"] .card-tint-blue   { --card-tint: radial-gradient(130% 90% at 50% 125%, rgba(79,142,247,0.22), rgba(255,255,255,0) 70%), var(--card); }
+  html[data-theme="light"] .card-tint-green  { --card-tint: radial-gradient(130% 90% at 50% 125%, rgba(52,211,153,0.20), rgba(255,255,255,0) 70%), var(--card); }
+  html[data-theme="light"] .card-tint-orange { --card-tint: radial-gradient(130% 90% at 50% 125%, rgba(251,146,60,0.20), rgba(255,255,255,0) 70%), var(--card); }
+  html[data-theme="light"] .card-tint-violet { --card-tint: radial-gradient(130% 90% at 50% 125%, rgba(167,139,250,0.22), rgba(255,255,255,0) 70%), var(--card); }
+  html[data-theme="light"] .card-tint-red    { --card-tint: radial-gradient(130% 90% at 50% 125%, rgba(248,113,113,0.20), rgba(255,255,255,0) 70%), var(--card); }
+
+  /* ── Thumbnail ── */
+  .card-thumb {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: transparent;
+    display: block;
+    line-height: 0;
+  }
+
+  .card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+    display: block;
+    filter: saturate(1.05);
+    transition: transform 0.5s cubic-bezier(.2,.8,.2,1), filter 0.4s ease;
+  }
+
+  .card:hover .card-thumb img {
+    transform: scale(1.06);
+  }
+
+  .card-thumb {
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 52%, rgba(0,0,0,0) 99%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 52%, rgba(0,0,0,0) 99%);
+  }
+
+  .card-thumb-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+  }
+
+  .card-body-wrap {
+    padding: 1.4rem 1.5rem 1.5rem;
     display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.75rem;
+    flex-direction: column;
+    gap: 1rem;
+    flex: 1;
   }
-
-  .card-icon {
-    width: 44px; height: 44px;
-    border-radius: 10px;
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-  }
-
-  .card-icon svg { width: 22px; height: 22px; }
 
   .card-badge {
-    font-size: 0.68rem;
+    font-size: 0.62rem;
     font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-transform: none;
     padding: 3px 8px;
     border-radius: 20px;
     border: 1px solid;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0.88;
+  }
+
+  .card-badge .lock-icon {
+    font-size: 0.72rem;
+    line-height: 1;
   }
 
   .badge-live {
-    color: var(--success);
-    border-color: rgba(52,211,153,0.3);
-    background: rgba(52,211,153,0.07);
+    color: #6EEFC0;
+    border-color: rgba(52,211,153,0.35);
+    background: rgba(12,20,16,0.5);
   }
 
   .badge-locked {
-    color: #F87171;
+    color: #F3B8B8;
     border-color: rgba(248,113,113,0.3);
-    background: rgba(248,113,113,0.07);
-  }
-
-  .locked-card::before {
-    background: linear-gradient(90deg, #F87171, #FB923C);
-  }
-
-  .locked-card:hover {
-    border-color: #F87171;
+    background: rgba(26,12,12,0.45);
   }
 
   .pulse {
@@ -415,20 +491,13 @@
     border: 1px solid rgba(79,142,247,0.2);
   }
 
-  /* ── Locked cards ── */
-  .badge-locked {
-    color: #FBBF24;
-    border-color: rgba(251,191,36,0.3);
-    background: rgba(251,191,36,0.07);
-  }
-
   .card.locked-card { cursor: pointer; }
 
   .card-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 0.75rem;
+    padding-top: 0.9rem;
     border-top: 1px solid var(--border);
     font-size: 0.78rem;
     color: var(--muted);
@@ -499,7 +568,7 @@
 
   #password-input {
     width: 100%;
-    background: var(--card);
+    background: var(--card-solid);
     border: 1px solid var(--border);
     border-radius: 10px;
     color: var(--text);
@@ -552,15 +621,7 @@
 
   .password-btn-submit:hover { background: var(--accent2); }
 
-  /* ── Responsive ── */
-  @media (max-width: 600px) {
-    .hero { padding: 2.5rem 1.25rem 2rem; }
-    .stats-bar, .grid-section { padding-left: 1.25rem; padding-right: 1.25rem; }
-  }
-
   /* ── Passcode bot ── */
-  .stats-bar { align-items: center; }
-
   #passbot-btn { margin-left: auto; margin-right: 4rem; }
 
   @media (max-width: 760px) {
@@ -656,7 +717,7 @@
 
   #passbot-name {
     width: 100%;
-    background: var(--card);
+    background: var(--card-solid);
     border: 1px solid var(--border);
     border-radius: 10px;
     color: var(--text);
@@ -681,7 +742,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    background: var(--card);
+    background: var(--card-solid);
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 0.6rem 0.85rem;
@@ -720,6 +781,34 @@
   .passbot-login code { letter-spacing: 0.05em; font-size: 0.85rem; }
 
   @keyframes fadein { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ── Footer ── */
+  footer {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 2rem 2rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+  }
+
+  footer p {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  footer .heart {
+    color: var(--accent);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .hero { padding: 2.5rem 1.25rem 2rem; }
+    .stats-bar, .grid-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+    footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+  }
 </style>
 </head>
 <body>
@@ -728,13 +817,8 @@
 <header>
   <div class="header-inner">
     <a class="logo" href="#">
-      <div class="logo-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
-          <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
-        </svg>
-      </div>
-      EduLink Reports
+      <img class="logo-img" src="icons/deli-logo.png" alt="Deli" />
+      <span class="logo-text"><b>ACI Edulink</b> <span>Reports</span></span>
     </a>
     <div class="header-right">
       <div class="theme-toggle" id="theme-toggle">
@@ -757,9 +841,9 @@
 
 <!-- ── Hero ── -->
 <section class="hero">
-  <div class="hero-eyebrow">Company Intelligence Hub</div>
-  <h1>All your reports,<br /><span>one place.</span></h1>
-  <p>Access every dashboard instantly. Click any card to open the full report in a new tab.</p>
+  <div class="hero-eyebrow">Powered by Strategy Team · ANC</div>
+  <h1><span class="hero-greeting" id="hero-greeting">Good morning</span> — all your reports,<br /><span class="grad">one place</span></h1>
+  <p>Access every dashboard instantly — click any card to open the full report in a new tab</p>
 </section>
 
 <!-- ── Stats bar ── -->
@@ -784,155 +868,154 @@
   <div class="dashboard-grid" id="dashboard-grid">
 
     <!-- Card 1 (Password Protected) -->
-    <a class="card locked-card" href="https://aci-edulink.github.io/zone-area-sku-sales/" data-locked="true" data-password="2026" target="_blank" rel="noopener">
-      <div class="card-head">
-        <div class="card-icon" style="background:rgba(248,113,113,0.12);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m6.08 6.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m6.08-6.08l4.24-4.24"/>
-          </svg>
+    <a class="card locked-card card-tint-red" href="https://aci-edulink.github.io/zone-area-sku-sales/" data-locked="true" data-password="2026" target="_blank" rel="noopener">
+      <div class="card-thumb">
+        <img src="icons/thumbs/thumb-zone-sku-sales.jpg" alt="Zone · Area · DB SKU Sales dashboard preview" loading="lazy" />
+        <div class="card-thumb-badge">
+          <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> restricted</div>
         </div>
-        <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> Restricted</div>
       </div>
-      <div class="card-body">
-        <h2>Zone · Area · DB SKU Sales (Last 10M)</h2>
-        <p>Zone, Area &amp; Distributor-wise SKU-level sales for the last 10 months — with stock, COGS and gross profit.</p>
-      </div>
-      <div class="card-tags">
-        <span class="tag">SKU Sales</span>
-        <span class="tag">Zone · Area · DB</span>
-        <span class="tag">Confidential</span>
-      </div>
-      <div class="card-footer">
-        <span>aci-edulink.github.io</span>
-        <span class="card-footer-action">
-          Enter password
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-        </span>
+      <div class="card-body-wrap">
+        <div class="card-body">
+          <h2>Zone · Area · DB SKU Sales (Last 10M)</h2>
+          <p>Zone, Area &amp; Distributor-wise SKU-level sales for the last 10 months — with stock, COGS and gross profit.</p>
+        </div>
+        <div class="card-tags">
+          <span class="tag">SKU Sales</span>
+          <span class="tag">Zone · Area · DB</span>
+          <span class="tag">Confidential</span>
+        </div>
+        <div class="card-footer">
+          <span>aci-edulink.github.io</span>
+          <span class="card-footer-action">
+            Enter password
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+        </div>
       </div>
     </a>
 
     <!-- Card 2 -->
-    <a class="card locked-card" href="https://aci-edulink.github.io/stock-intelligence/" data-locked="true" target="_blank" rel="noopener">
-      <div class="card-head">
-        <div class="card-icon" style="background:rgba(52,211,153,0.12);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>
-          </svg>
+    <a class="card locked-card card-tint-green" href="https://aci-edulink.github.io/stock-intelligence/" data-locked="true" target="_blank" rel="noopener">
+      <div class="card-thumb">
+        <img src="icons/thumbs/thumb-stock-intelligence.jpg" alt="Stock Intelligence dashboard preview" loading="lazy" />
+        <div class="card-thumb-badge">
+          <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> restricted</div>
         </div>
-        <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> Restricted</div>
       </div>
-      <div class="card-body">
-        <h2>Stock Intelligence</h2>
-        <p>Real-time stock and inventory intelligence report — monitor levels, turnover rates, and supply chain signals at a glance.</p>
-      </div>
-      <div class="card-tags">
-        <span class="tag">Inventory</span>
-        <span class="tag">Supply Chain</span>
-        <span class="tag">Stock</span>
-      </div>
-      <div class="card-footer">
-        <span>aci-edulink.github.io</span>
-        <span class="card-footer-action">
-          Enter password
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-        </span>
+      <div class="card-body-wrap">
+        <div class="card-body">
+          <h2>Stock Intelligence</h2>
+          <p>Real-time stock and inventory intelligence report — monitor levels, turnover rates, and supply chain signals at a glance.</p>
+        </div>
+        <div class="card-tags">
+          <span class="tag">Inventory</span>
+          <span class="tag">Supply Chain</span>
+          <span class="tag">Stock</span>
+        </div>
+        <div class="card-footer">
+          <span>aci-edulink.github.io</span>
+          <span class="card-footer-action">
+            Enter password
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+        </div>
       </div>
     </a>
 
     <!-- Card 3 -->
-    <a class="card locked-card" href="https://aci-edulink.github.io/product-velocity/" data-locked="true" target="_blank" rel="noopener">
-      <div class="card-head">
-        <div class="card-icon" style="background:rgba(251,146,60,0.12);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#FB923C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-          </svg>
+    <a class="card locked-card card-tint-orange" href="https://aci-edulink.github.io/product-velocity/" data-locked="true" target="_blank" rel="noopener">
+      <div class="card-thumb">
+        <img src="icons/thumbs/thumb-product-velocity.jpg" alt="Product Velocity dashboard preview" loading="lazy" />
+        <div class="card-thumb-badge">
+          <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> restricted</div>
         </div>
-        <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> Restricted</div>
       </div>
-      <div class="card-body">
-        <h2>Product Velocity</h2>
-        <p>Track product movement speed, demand trends, and throughput — identify your fastest and slowest moving items in real time.</p>
-      </div>
-      <div class="card-tags">
-        <span class="tag">Products</span>
-        <span class="tag">Velocity</span>
-        <span class="tag">Demand</span>
-      </div>
-      <div class="card-footer">
-        <span>aci-edulink.github.io</span>
-        <span class="card-footer-action">
-          Enter password
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-        </span>
+      <div class="card-body-wrap">
+        <div class="card-body">
+          <h2>Product Velocity</h2>
+          <p>Track product movement speed, demand trends, and throughput — identify your fastest and slowest moving items in real time.</p>
+        </div>
+        <div class="card-tags">
+          <span class="tag">Products</span>
+          <span class="tag">Velocity</span>
+          <span class="tag">Demand</span>
+        </div>
+        <div class="card-footer">
+          <span>aci-edulink.github.io</span>
+          <span class="card-footer-action">
+            Enter password
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+        </div>
       </div>
     </a>
 
     <!-- Card 4 -->
-    <a class="card locked-card" href="https://aci-edulink.github.io/distributor-sales-trend/" data-locked="true" target="_blank" rel="noopener">
-      <div class="card-head">
-        <div class="card-icon" style="background:rgba(167,139,250,0.12);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.1-2.8-2.8L7 14"/>
-          </svg>
+    <a class="card locked-card card-tint-violet" href="https://aci-edulink.github.io/distributor-sales-trend/" data-locked="true" target="_blank" rel="noopener">
+      <div class="card-thumb">
+        <img src="icons/thumbs/thumb-distributor-trend.jpg" alt="Distributor Sales Trend dashboard preview" loading="lazy" />
+        <div class="card-thumb-badge">
+          <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> restricted</div>
         </div>
-        <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> Restricted</div>
       </div>
-      <div class="card-body">
-        <h2>Distributor Sales Trend</h2>
-        <p>Track distributor-wise sales performance and trends over time to spot growth areas and underperforming regions.</p>
-      </div>
-      <div class="card-tags">
-        <span class="tag">Sales</span>
-        <span class="tag">Distributors</span>
-        <span class="tag">Trends</span>
-      </div>
-      <div class="card-footer">
-        <span>aci-edulink.github.io</span>
-        <span class="card-footer-action">
-          Enter password
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-        </span>
+      <div class="card-body-wrap">
+        <div class="card-body">
+          <h2>Distributor Sales Trend</h2>
+          <p>Track distributor-wise sales performance and trends over time to spot growth areas and underperforming regions.</p>
+        </div>
+        <div class="card-tags">
+          <span class="tag">Sales</span>
+          <span class="tag">Distributors</span>
+          <span class="tag">Trends</span>
+        </div>
+        <div class="card-footer">
+          <span>aci-edulink.github.io</span>
+          <span class="card-footer-action">
+            Enter password
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+        </div>
       </div>
     </a>
 
-    <!-- Card 5 (Password Protected) -->
-    <a class="card locked-card" href="https://aci-edulink.github.io/profit-loss-VH-analysis/" data-locked="true" data-vip="true" data-password="2026" data-login-id="edulink" data-login-pass="deli2026" target="_blank" rel="noopener">
-      <div class="card-head">
-        <div class="card-icon" style="background:rgba(248,113,113,0.12);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#F87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m6.08 6.08l4.24 4.24M1 12h6m6 0h6M4.22 19.78l4.24-4.24m6.08-6.08l4.24-4.24"/>
-          </svg>
+    <!-- Card 5 (Password Protected, VIP) -->
+    <a class="card locked-card card-tint-red" href="https://aci-edulink.github.io/profit-loss-VH-analysis/" data-locked="true" data-vip="true" data-password="2026" data-login-id="edulink" data-login-pass="deli2026" target="_blank" rel="noopener">
+      <div class="card-thumb">
+        <img src="icons/thumbs/thumb-profit-loss.jpg" alt="Profit & Loss VH Analysis dashboard preview" loading="lazy" />
+        <div class="card-thumb-badge">
+          <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> restricted</div>
         </div>
-        <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> Restricted</div>
       </div>
-      <div class="card-body">
-        <h2>Profit & Loss – VH Analysis</h2>
-        <p>Detailed profit and loss breakdown by vertical head — financial performance analysis across business units.</p>
-      </div>
-      <div class="card-tags">
-        <span class="tag">Finance</span>
-        <span class="tag">P&amp;L</span>
-        <span class="tag">Confidential</span>
-      </div>
-      <div class="card-footer">
-        <span>aci-edulink.github.io</span>
-        <span class="card-footer-action">
-          Enter password
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-        </span>
+      <div class="card-body-wrap">
+        <div class="card-body">
+          <h2>Profit &amp; Loss – VH Analysis</h2>
+          <p>Detailed profit and loss breakdown by vertical head — financial performance analysis across business units.</p>
+        </div>
+        <div class="card-tags">
+          <span class="tag">Finance</span>
+          <span class="tag">P&amp;L</span>
+          <span class="tag">Confidential</span>
+        </div>
+        <div class="card-footer">
+          <span>aci-edulink.github.io</span>
+          <span class="card-footer-action">
+            Enter password
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+        </div>
       </div>
     </a>
-
 
   </div>
 </section>
@@ -951,67 +1034,76 @@
   <div class="dashboard-grid">
 
     <!-- Presentation Card -->
-    <a class="card" href="https://aci-edulink.github.io/Powering-Automation-with-AI/" target="_blank" rel="noopener">
-      <div class="card-head">
-        <div class="card-icon" style="background:rgba(52,211,153,0.12);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
-          </svg>
+    <a class="card card-tint-green" href="https://aci-edulink.github.io/Powering-Automation-with-AI/" target="_blank" rel="noopener">
+      <div class="card-body-wrap" style="padding-top:1.5rem;">
+        <div class="card-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.75rem;">
+          <div class="card-icon" style="width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:rgba(52,211,153,0.12);flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+            </svg>
+          </div>
+          <div class="card-badge badge-live" style="color:var(--success);border-color:rgba(52,211,153,0.3);background:rgba(52,211,153,0.07);"><span class="pulse"></span> Live</div>
         </div>
-        <div class="card-badge badge-live"><span class="pulse"></span> Live</div>
-      </div>
-      <div class="card-body">
-        <h2>Powering Automation with AI</h2>
-        <p>Interactive presentation — how ACI Edulink is solving real operations challenges with 5 live dashboards and AI-assisted pipelines.</p>
-      </div>
-      <div class="card-tags">
-        <span class="tag">Presentation</span>
-        <span class="tag">AI</span>
-        <span class="tag">Automation</span>
-      </div>
-      <div class="card-footer">
-        <span>aci-edulink.github.io</span>
-        <span class="card-footer-action">
-          Open slides
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-        </span>
+        <div class="card-body">
+          <h2>Powering Automation with AI</h2>
+          <p>Interactive presentation — how ACI Edulink is solving real operations challenges with 5 live dashboards and AI-assisted pipelines.</p>
+        </div>
+        <div class="card-tags">
+          <span class="tag">Presentation</span>
+          <span class="tag">AI</span>
+          <span class="tag">Automation</span>
+        </div>
+        <div class="card-footer">
+          <span>aci-edulink.github.io</span>
+          <span class="card-footer-action">
+            Open slides
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+        </div>
       </div>
     </a>
 
     <!-- Training Card -->
-    <a class="card" href="https://aci-edulink.github.io/Notion-AI-Trainings/" target="_blank" rel="noopener">
-      <div class="card-head">
-        <div class="card-icon" style="background:rgba(79,142,247,0.12);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#4F8EF7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-          </svg>
+    <a class="card card-tint-blue" href="https://aci-edulink.github.io/Notion-AI-Trainings/" target="_blank" rel="noopener">
+      <div class="card-body-wrap" style="padding-top:1.5rem;">
+        <div class="card-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.75rem;">
+          <div class="card-icon" style="width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:rgba(79,142,247,0.12);flex-shrink:0;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4F8EF7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="card-badge badge-live" style="color:var(--success);border-color:rgba(52,211,153,0.3);background:rgba(52,211,153,0.07);"><span class="pulse"></span> Live</div>
         </div>
-        <div class="card-badge badge-live"><span class="pulse"></span> Live</div>
-      </div>
-      <div class="card-body">
-        <h2>Notion &amp; AI Trainings</h2>
-        <p>Learning resources and training materials to help the team get up to speed on Notion and AI tools.</p>
-      </div>
-      <div class="card-tags">
-        <span class="tag">Training</span>
-        <span class="tag">Notion</span>
-        <span class="tag">AI</span>
-      </div>
-      <div class="card-footer">
-        <span>aci-edulink.github.io</span>
-        <span class="card-footer-action">
-          Open resource
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
-            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-          </svg>
-        </span>
+        <div class="card-body">
+          <h2>Notion &amp; AI Trainings</h2>
+          <p>Learning resources and training materials to help the team get up to speed on Notion and AI tools.</p>
+        </div>
+        <div class="card-tags">
+          <span class="tag">Training</span>
+          <span class="tag">Notion</span>
+          <span class="tag">AI</span>
+        </div>
+        <div class="card-footer">
+          <span>aci-edulink.github.io</span>
+          <span class="card-footer-action">
+            Open resource
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+          </span>
+        </div>
       </div>
     </a>
 
   </div>
 </section>
+
+<!-- ── Footer ── -->
+<footer>
+  <p>Powered by <strong>Strategy Team</strong> · ANC</p>
+</footer>
 
 <!-- ── Password Modal ── -->
 <div id="password-overlay">
@@ -1065,6 +1157,16 @@ applyTheme(savedTheme);
 
 darkBtn.addEventListener('click', () => applyTheme('dark'));
 lightBtn.addEventListener('click', () => applyTheme('light'));
+
+// ── Time-based greeting ──
+(function setGreeting() {
+  const hour = new Date().getHours();
+  let greeting = 'Good evening';
+  if (hour < 12) greeting = 'Good morning';
+  else if (hour < 17) greeting = 'Good afternoon';
+  const el = document.getElementById('hero-greeting');
+  if (el) el.textContent = greeting;
+})();
 
 // ── Password-protected report links ──
 const DEFAULT_PASSWORD = "7792";
@@ -1163,6 +1265,29 @@ document.getElementById('passbot-close').addEventListener('click', closePassbot)
 passbotName.addEventListener('input', renderPassbotList);
 passbotOverlay.addEventListener('click', e => { if (e.target === passbotOverlay) closePassbot(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closePassbot(); });
+
+// ── PWA: register service worker (auto-updates the installed app) ──
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').then(reg => {
+      reg.update();
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'activated') {
+            window.location.reload();
+          }
+        });
+      });
+    }).catch(err => console.warn('Service worker registration failed:', err));
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        navigator.serviceWorker.getRegistration().then(r => r && r.update());
+      }
+    });
+  });
+}
 </script>
 </body>
 </html>
