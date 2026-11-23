@@ -7,8 +7,8 @@
 <meta name="description" content="All ACI Edulink dashboards in one place — SKU sales, stock intelligence, product velocity, distributor trends and P&amp;L." />
 <meta name="theme-color" content="#0C1220" />
 <link rel="manifest" href="manifest.json" />
-<link rel="icon" href="icons/icon-192.png" />
-<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<link rel="icon" href="icon-192.png" />
+<link rel="apple-touch-icon" href="icon-192.png" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="EduLink Hub" />
@@ -265,6 +265,10 @@
   }
 
   .stat strong { color: var(--text); font-weight: 600; }
+
+  .notify-btn { cursor: pointer; font-family: inherit; color: var(--accent2); border-color: rgba(79,142,247,0.35); }
+  .notify-btn:hover { background: rgba(79,142,247,0.14); }
+  .notify-btn[hidden] { display: none; }
 
   /* ── Grid ── */
   .grid-section {
@@ -817,7 +821,7 @@
 <header>
   <div class="header-inner">
     <a class="logo" href="#">
-      <img class="logo-img" src="icons/deli-logo.png" alt="Deli" />
+      <img class="logo-img" src="deli-logo.png" alt="Deli" />
       <span class="logo-text"><b>ACI Edulink</b> <span>Reports</span></span>
     </a>
     <div class="header-right">
@@ -850,6 +854,7 @@
 <div class="stats-bar">
   <div class="stat"><span class="live-dot"></span> <strong>5</strong> Active Dashboards</div>
   <div class="stat">🔄 Updated regularly</div>
+  <button class="stat notify-btn" id="notify-btn" hidden>🔔 Get notifications</button>
   <button id="passbot-btn" aria-label="Ask me for passcode">
     <span class="passbot-face">
       <svg viewBox="0 0 24 24" fill="none" stroke="#7C5CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -870,7 +875,7 @@
     <!-- Card 1 (Password Protected) -->
     <a class="card locked-card card-tint-red" href="https://aci-edulink.github.io/zone-area-sku-sales/" data-locked="true" data-password="2026" target="_blank" rel="noopener">
       <div class="card-thumb">
-        <img src="icons/thumbs/thumb-zone-sku-sales.jpg" alt="Zone · Area · DB SKU Sales dashboard preview" loading="lazy" />
+        <img src="thumb-zone-sku-sales.jpg" alt="Zone · Area · DB SKU Sales dashboard preview" loading="lazy" />
         <div class="card-thumb-badge">
           <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> restricted</div>
         </div>
@@ -900,7 +905,7 @@
     <!-- Card 2 -->
     <a class="card locked-card card-tint-green" href="https://aci-edulink.github.io/stock-intelligence/" data-locked="true" target="_blank" rel="noopener">
       <div class="card-thumb">
-        <img src="icons/thumbs/thumb-stock-intelligence.jpg" alt="Stock Intelligence dashboard preview" loading="lazy" />
+        <img src="thumb-stock-intelligence.jpg" alt="Stock Intelligence dashboard preview" loading="lazy" />
         <div class="card-thumb-badge">
           <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> restricted</div>
         </div>
@@ -930,7 +935,7 @@
     <!-- Card 3 -->
     <a class="card locked-card card-tint-orange" href="https://aci-edulink.github.io/product-velocity/" data-locked="true" target="_blank" rel="noopener">
       <div class="card-thumb">
-        <img src="icons/thumbs/thumb-product-velocity.jpg" alt="Product Velocity dashboard preview" loading="lazy" />
+        <img src="thumb-product-velocity.jpg" alt="Product Velocity dashboard preview" loading="lazy" />
         <div class="card-thumb-badge">
           <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> restricted</div>
         </div>
@@ -960,7 +965,7 @@
     <!-- Card 4 -->
     <a class="card locked-card card-tint-violet" href="https://aci-edulink.github.io/distributor-sales-trend/" data-locked="true" target="_blank" rel="noopener">
       <div class="card-thumb">
-        <img src="icons/thumbs/thumb-distributor-trend.jpg" alt="Distributor Sales Trend dashboard preview" loading="lazy" />
+        <img src="thumb-distributor-trend.jpg" alt="Distributor Sales Trend dashboard preview" loading="lazy" />
         <div class="card-thumb-badge">
           <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> restricted</div>
         </div>
@@ -990,7 +995,7 @@
     <!-- Card 5 (Password Protected, VIP) -->
     <a class="card locked-card card-tint-red" href="https://aci-edulink.github.io/profit-loss-VH-analysis/" data-locked="true" data-vip="true" data-password="2026" data-login-id="edulink" data-login-pass="deli2026" target="_blank" rel="noopener">
       <div class="card-thumb">
-        <img src="icons/thumbs/thumb-profit-loss.jpg" alt="Profit & Loss VH Analysis dashboard preview" loading="lazy" />
+        <img src="thumb-profit-loss.jpg" alt="Profit & Loss VH Analysis dashboard preview" loading="lazy" />
         <div class="card-thumb-badge">
           <div class="card-badge badge-locked"><span class="lock-icon">🔒</span> restricted</div>
         </div>
@@ -1266,15 +1271,43 @@ passbotName.addEventListener('input', renderPassbotList);
 passbotOverlay.addEventListener('click', e => { if (e.target === passbotOverlay) closePassbot(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closePassbot(); });
 
+// ── Push notifications (OneSignal) ──
+// Paste your OneSignal App ID below to switch notifications on
+const ONESIGNAL_APP_ID = "PASTE-YOUR-ONESIGNAL-APP-ID";
+
+if (!ONESIGNAL_APP_ID.startsWith('PASTE') && 'Notification' in window && 'serviceWorker' in navigator) {
+  const s = document.createElement('script');
+  s.src = 'https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';
+  s.defer = true;
+  document.head.appendChild(s);
+
+  window.OneSignalDeferred = window.OneSignalDeferred || [];
+  OneSignalDeferred.push(async function (OneSignal) {
+    await OneSignal.init({
+      appId: ONESIGNAL_APP_ID,
+      serviceWorkerPath: 'sw.js',
+      serviceWorkerParam: { scope: '/' }
+    });
+    const btn = document.getElementById('notify-btn');
+    const refresh = () => {
+      btn.hidden = OneSignal.User.PushSubscription.optedIn || Notification.permission === 'denied';
+    };
+    refresh();
+    OneSignal.User.PushSubscription.addEventListener('change', refresh);
+    btn.addEventListener('click', () => OneSignal.Notifications.requestPermission());
+  });
+}
+
 // ── PWA: register service worker (auto-updates the installed app) ──
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js').then(reg => {
       reg.update();
+      const hadController = !!navigator.serviceWorker.controller;
       reg.addEventListener('updatefound', () => {
         const newWorker = reg.installing;
         newWorker.addEventListener('statechange', () => {
-          if (newWorker.state === 'activated') {
+          if (newWorker.state === 'activated' && hadController) {
             window.location.reload();
           }
         });

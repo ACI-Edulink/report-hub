@@ -3,7 +3,10 @@
 // GitHub Pages is picked up the next time the installed app is opened —
 // with a cached fallback so the app still opens if the network is down.
 
-const CACHE_NAME = 'edulink-hub-v1';
+// OneSignal push support (must come first so its push handlers register)
+importScripts('https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js');
+
+const CACHE_NAME = 'edulink-hub-v2';
 const APP_SHELL = [
   './',
   './index.html',
@@ -35,6 +38,8 @@ self.addEventListener('activate', event => {
 // it always tries the live GitHub Pages copy first.
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
+  // Only manage our own files; leave OneSignal / fonts / external requests alone
+  if (new URL(event.request.url).origin !== self.location.origin) return;
 
   event.respondWith(
     fetch(event.request)
