@@ -827,6 +827,79 @@
     .theme-toggle-option svg { width: 15px; height: 15px; }
   }
   @media (max-width: 360px) { .logo-text span { display: none; } }
+
+  /* ── Deli Meets banner ── */
+  .meets-banner {
+    position: relative; display: grid; grid-template-columns: 1fr 1.25fr; gap: 1.5rem; align-items: center;
+    padding: 1.6rem 1.8rem; border-radius: 22px; text-decoration: none; color: var(--text); overflow: hidden;
+    background: radial-gradient(120% 140% at 0% 0%, rgba(224,0,70,0.20), rgba(124,92,255,0.12) 45%, rgba(255,255,255,0) 75%), var(--card);
+    border: 1px solid rgba(224,0,70,0.45);
+    box-shadow: 0 0 0 1px rgba(224,0,70,0.10), 0 10px 40px rgba(224,0,70,0.18), 0 0 60px rgba(124,92,255,0.14);
+    animation: meets-pulse 3s ease-in-out infinite;
+    transition: transform .3s ease;
+  }
+  .meets-banner:hover { transform: translateY(-4px); }
+  @keyframes meets-pulse {
+    0%,100% { box-shadow: 0 0 0 1px rgba(224,0,70,0.10), 0 10px 40px rgba(224,0,70,0.16), 0 0 50px rgba(124,92,255,0.12); }
+    50%     { box-shadow: 0 0 0 1px rgba(224,0,70,0.25), 0 12px 50px rgba(224,0,70,0.34), 0 0 80px rgba(124,92,255,0.24); }
+  }
+  .meets-glow {
+    position: absolute; top: 0; left: -40%; width: 40%; height: 100%; pointer-events: none;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.10), transparent);
+    transform: skewX(-18deg); animation: meets-shine 4.5s ease-in-out infinite;
+  }
+  @keyframes meets-shine { 0% { left: -45%; } 55%,100% { left: 130%; } }
+  .meets-text { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 0.7rem; }
+  .meets-chip {
+    display: inline-flex; align-items: center; gap: 9px; padding: 5px 13px 5px 6px; border-radius: 30px;
+    font-size: 0.74rem; font-weight: 700; color: #fff; background: linear-gradient(90deg, #E00046, #7C5CFF);
+  }
+  .meets-bell { position: relative; width: 24px; height: 24px; border-radius: 50%; background: rgba(255,255,255,0.22); display: grid; place-items: center; }
+  .meets-bell svg { width: 14px; height: 14px; transform-origin: 50% 10%; animation: bell-ring 2.4s ease-in-out infinite; }
+  .meets-bell i { position: absolute; top: 1px; right: 1px; width: 8px; height: 8px; border-radius: 50%; background: #FFD43B; box-shadow: 0 0 0 0 rgba(255,212,59,0.7); animation: dot-ping 1.6s infinite; }
+  @keyframes bell-ring {
+    0%,55%,100% { transform: rotate(0); }
+    60% { transform: rotate(18deg); } 66% { transform: rotate(-16deg); } 72% { transform: rotate(12deg); } 78% { transform: rotate(-8deg); } 84% { transform: rotate(4deg); }
+  }
+  @keyframes dot-ping { 0% { box-shadow: 0 0 0 0 rgba(255,212,59,0.7); } 100% { box-shadow: 0 0 0 8px rgba(255,212,59,0); } }
+  .meets-text h2 { font-family: 'Plus Jakarta Sans','Inter',sans-serif; font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; margin: 0; }
+  .meets-sub { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.55; max-width: 38ch; }
+  .meets-cta {
+    display: inline-flex; align-items: center; gap: 8px; padding: 0.7rem 1.3rem; border-radius: 12px; font-weight: 700; font-size: 0.9rem; color: #fff;
+    background: linear-gradient(90deg, #E00046, #7C5CFF); box-shadow: 0 6px 22px rgba(224,0,70,0.4);
+  }
+  .meets-cta svg { width: 16px; height: 16px; animation: nudge 1.4s ease-in-out infinite; }
+  @keyframes nudge { 0%,100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
+  .meets-domain { font-size: 0.74rem; color: var(--muted); opacity: 0.8; }
+  .meets-thumb { position: relative; z-index: 1; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 14px 40px rgba(0,0,0,0.35); line-height: 0; animation: meets-float 5s ease-in-out infinite; }
+  .meets-thumb img { width: 100%; display: block; }
+  @keyframes meets-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+  @media (max-width: 760px) { .meets-banner { grid-template-columns: 1fr; padding: 1.3rem; } .meets-text h2 { font-size: 1.6rem; } }
+  @media (prefers-reduced-motion: reduce) { .meets-banner, .meets-glow, .meets-bell svg, .meets-bell i, .meets-cta svg, .meets-thumb { animation: none; } }
+
+  .meets-title { display: flex; align-items: center; gap: 12px; }
+  .meets-logo { width: 46px; height: 46px; flex-shrink: 0; border-radius: 12px; box-shadow: 0 6px 20px rgba(232,0,74,0.45); }
+
+  /* compact passcode button */
+  #passbot-btn { padding: 5px 15px 5px 5px; gap: 8px; font-size: 0.84rem; box-shadow: 0 8px 22px rgba(124,92,255,0.4); }
+  #passbot-btn .passbot-face { width: 30px; height: 30px; }
+  #passbot-btn .passbot-face svg { width: 18px; height: 18px; }
+  #passbot-btn::after { inset: -3px; border-radius: 40px; }
+
+  /* floating Deli Meets signal */
+  #meets-float { position: fixed; right: 18px; bottom: 22px; z-index: 90; display: flex; align-items: center; gap: 10px; text-decoration: none; animation: mf-bob 2.8s ease-in-out infinite; }
+  #meets-float:hover { animation-play-state: paused; }
+  @keyframes mf-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  .mf-icon { position: relative; width: 58px; height: 58px; border-radius: 17px; flex-shrink: 0; box-shadow: 0 10px 28px rgba(232,0,74,0.55); }
+  .mf-icon svg { width: 100%; height: 100%; display: block; border-radius: 17px; animation: mf-wiggle 3.2s ease-in-out infinite; transform-origin: 50% 100%; }
+  .mf-icon::before { content: ''; position: absolute; inset: -4px; border-radius: 21px; border: 2px solid rgba(232,0,74,0.7); animation: passbot-ring 2s ease-out infinite; }
+  @keyframes mf-wiggle { 0%,60%,100% { transform: rotate(0); } 66% { transform: rotate(-9deg); } 72% { transform: rotate(8deg); } 78% { transform: rotate(-6deg); } 84% { transform: rotate(3deg); } }
+  .mf-dot { position: absolute; top: -4px; right: -4px; width: 14px; height: 14px; border-radius: 50%; background: #FFD43B; border: 2px solid var(--bg, #0C1220); animation: dot-ping 1.6s infinite; }
+  .mf-bubble { position: relative; max-width: 190px; padding: 9px 14px; border-radius: 14px; background: #fff; color: #1a1a2e; font-size: 0.82rem; font-weight: 700; line-height: 1.3; box-shadow: 0 8px 24px rgba(0,0,0,0.35); transition: opacity .35s ease, transform .35s ease; }
+  .mf-bubble::after { content: ''; position: absolute; right: -6px; top: 50%; width: 12px; height: 12px; background: #fff; transform: translateY(-50%) rotate(45deg); border-radius: 2px; }
+  .mf-bubble.swap { opacity: 0; transform: translateX(8px); }
+  @media (max-width: 600px) { #meets-float { right: 12px; bottom: 14px; } .mf-icon { width: 50px; height: 50px; } .mf-bubble { max-width: 150px; font-size: 0.74rem; padding: 7px 11px; } }
+  @media (prefers-reduced-motion: reduce) { #meets-float, .mf-icon svg, .mf-icon::before, .mf-dot { animation: none; } }
 </style>
 </head>
 <body>
@@ -873,7 +946,7 @@
         <path d="M9.5 17h5"/>
       </svg>
     </span>
-    Ask me For Passcode!
+    Get Passcode
   </button>
 </div>
 
@@ -1035,85 +1108,29 @@
   </div>
 </section>
 
-<!-- ── Upcoming Trainings Section ── -->
+<!-- ── Deli Meets Section ── -->
 <section class="grid-section">
-  <div class="section-label section-label-featured">
-    <span class="spark">
-      <svg viewBox="0 0 24 24" fill="none" stroke="url(#sparkGrad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <defs><linearGradient id="sparkGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#4F8EF7"/><stop offset="100%" stop-color="#7BB3FF"/></linearGradient></defs>
-        <path d="M12 2l2.4 6.6L21 11l-6.6 2.4L12 20l-2.4-6.6L3 11l6.6-2.4L12 2z"/>
-      </svg>
-    </span>
-    <span class="gradient-text">Upcoming AI &amp; Other Trainings for Team!</span>
-  </div>
-  <div class="dashboard-grid">
-
-    <!-- Presentation Card -->
-    <a class="card card-tint-green" href="https://aci-edulink.github.io/Powering-Automation-with-AI/" target="_blank" rel="noopener">
-      <div class="card-body-wrap" style="padding-top:1.5rem;">
-        <div class="card-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.75rem;">
-          <div class="card-icon" style="width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:rgba(52,211,153,0.12);flex-shrink:0;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;">
-              <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
-            </svg>
-          </div>
-          <div class="card-badge badge-live" style="color:var(--success);border-color:rgba(52,211,153,0.3);background:rgba(52,211,153,0.07);"><span class="pulse"></span> Live</div>
-        </div>
-        <div class="card-body">
-          <h2>Powering Automation with AI</h2>
-          <p>Interactive presentation — how ACI Edulink is solving real operations challenges with 5 live dashboards and AI-assisted pipelines.</p>
-        </div>
-        <div class="card-tags">
-          <span class="tag">Presentation</span>
-          <span class="tag">AI</span>
-          <span class="tag">Automation</span>
-        </div>
-        <div class="card-footer">
-          <span>aci-edulink.github.io</span>
-          <span class="card-footer-action">
-            Open slides
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-            </svg>
-          </span>
-        </div>
-      </div>
-    </a>
-
-    <!-- Training Card -->
-    <a class="card card-tint-blue" href="https://aci-edulink.github.io/Notion-AI-Trainings/" target="_blank" rel="noopener">
-      <div class="card-body-wrap" style="padding-top:1.5rem;">
-        <div class="card-head" style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.75rem;">
-          <div class="card-icon" style="width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:rgba(79,142,247,0.12);flex-shrink:0;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="#4F8EF7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:22px;height:22px;">
-              <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
-            </svg>
-          </div>
-          <div class="card-badge badge-live" style="color:var(--success);border-color:rgba(52,211,153,0.3);background:rgba(52,211,153,0.07);"><span class="pulse"></span> Live</div>
-        </div>
-        <div class="card-body">
-          <h2>Notion &amp; AI Trainings</h2>
-          <p>Learning resources and training materials to help the team get up to speed on Notion and AI tools.</p>
-        </div>
-        <div class="card-tags">
-          <span class="tag">Training</span>
-          <span class="tag">Notion</span>
-          <span class="tag">AI</span>
-        </div>
-        <div class="card-footer">
-          <span>aci-edulink.github.io</span>
-          <span class="card-footer-action">
-            Open resource
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-            </svg>
-          </span>
-        </div>
-      </div>
-    </a>
-
-  </div>
+  <div class="section-label">Team Meetings</div>
+  <a class="meets-banner" href="https://deli-meets.delibangladesh.com/" target="_blank" rel="noopener">
+    <div class="meets-glow"></div>
+    <div class="meets-text">
+      <div class="meets-chip"><span class="meets-bell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><i></i></span> Check for new meetings</div>
+      <h2 class="meets-title"><svg class="meets-logo" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#E8004A"/><path d="M14 17h36a4 4 0 0 1 4 4v20a4 4 0 0 1-4 4H33l-10 9v-9h-9a4 4 0 0 1-4-4V21a4 4 0 0 1 4-4z" fill="#fff"/><text x="32" y="37" text-anchor="middle" font-family="Plus Jakarta Sans,Inter,sans-serif" font-weight="800" font-size="14" fill="#E8004A">deli</text></svg><span>Deli Meets</span></h2>
+      <p class="meets-sub">Team meetings, minutes and chat in one place — see if you have a meeting coming up</p>
+      <span class="meets-cta">Open Deli Meets
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </span>
+      <div class="meets-domain">deli-meets.delibangladesh.com</div>
+    </div>
+    <div class="meets-thumb"><img src="thumb-deli-meets.jpg" alt="Deli Meets home screen" loading="lazy" /></div>
+  </a>
 </section>
+
+<!-- ── Floating Deli Meets signal ── -->
+<a id="meets-float" href="https://deli-meets.delibangladesh.com/" target="_blank" rel="noopener" aria-label="Check Deli Meets for upcoming meetings">
+  <span class="mf-bubble" id="mf-bubble">Meeting coming up?</span>
+  <span class="mf-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="16" fill="#E8004A"/><path d="M14 17h36a4 4 0 0 1 4 4v20a4 4 0 0 1-4 4H33l-10 9v-9h-9a4 4 0 0 1-4-4V21a4 4 0 0 1 4-4z" fill="#fff"/><text x="32" y="37" text-anchor="middle" font-family="Plus Jakarta Sans,Inter,sans-serif" font-weight="800" font-size="14" fill="#E8004A">deli</text></svg><i class="mf-dot"></i></span>
+</a>
 
 <!-- ── Footer ── -->
 <footer>
@@ -1331,6 +1348,14 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
+</script>
+<script>
+(function(){
+  var msgs=["Meeting coming up?","Check your next meeting","Anything new in Deli Meets?","Don't miss a meeting","Tap to see what's scheduled"];
+  var el=document.getElementById('mf-bubble'),i=0;
+  if(!el)return;
+  setInterval(function(){el.classList.add('swap');setTimeout(function(){i=(i+1)%msgs.length;el.textContent=msgs[i];el.classList.remove('swap');},350);},3800);
+})();
 </script>
 </body>
 </html>
