@@ -836,7 +836,7 @@
   <div class="header-inner">
     <a class="logo" href="#">
       <img class="logo-img" src="deli-logo.png" alt="Deli" />
-      <span class="logo-text"><b>ACI Edulink</b> <span>Reports</span></span>
+      <span class="logo-text"><b>Business</b> <span>Reports</span></span>
     </a>
     <div class="header-right">
       <div class="theme-toggle" id="theme-toggle">
@@ -856,7 +856,7 @@
 <!-- ── Hero ── -->
 <section class="hero">
   <div class="hero-eyebrow">Powered by Deli ACI Strategy Team</div>
-  <h1><span class="hero-greeting" id="hero-greeting">Good morning</span> — all your reports,<br /><span class="grad">one place</span></h1>
+  <h1><span class="hero-greeting" id="hero-greeting">Good Morning</span> — all your reports,<br /><span class="grad">one place</span></h1>
   <p>Access every dashboard instantly — click any card to open the full report in a new tab</p>
 </section>
 
@@ -1176,9 +1176,9 @@ lightBtn.addEventListener('click', () => applyTheme('light'));
 // ── Time-based greeting ──
 (function setGreeting() {
   const hour = new Date().getHours();
-  let greeting = 'Good evening';
-  if (hour < 12) greeting = 'Good morning';
-  else if (hour < 17) greeting = 'Good afternoon';
+  let greeting = 'Good Evening';
+  if (hour < 12) greeting = 'Good Morning';
+  else if (hour < 17) greeting = 'Good Afternoon';
   const el = document.getElementById('hero-greeting');
   if (el) el.textContent = greeting;
 })();
