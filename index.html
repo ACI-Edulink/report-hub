@@ -813,6 +813,20 @@
     .stats-bar, .grid-section { padding-left: 1.25rem; padding-right: 1.25rem; }
     footer { padding-left: 1.25rem; padding-right: 1.25rem; }
   }
+
+  /* mobile header: one line title, toggle top right */
+  .logo { white-space: nowrap; min-width: 0; }
+  .header-right { flex-shrink: 0; }
+  @media (max-width: 600px) {
+    header { padding: 0 0.8rem; }
+    .header-inner { gap: 8px; }
+    .logo { gap: 7px; font-size: 0.86rem; }
+    .logo-img { width: 28px; height: 28px; border-radius: 8px; }
+    .theme-toggle { gap: 2px; padding: 3px; }
+    .theme-toggle-option { padding: 5px 8px; font-size: 0; gap: 0; }
+    .theme-toggle-option svg { width: 15px; height: 15px; }
+  }
+  @media (max-width: 360px) { .logo-text span { display: none; } }
 </style>
 </head>
 <body>
@@ -835,17 +849,13 @@
           Light
         </span>
       </div>
-      <div class="header-meta">
-        <span class="live-dot"></span>
-        All dashboards secured
-      </div>
     </div>
   </div>
 </header>
 
 <!-- ── Hero ── -->
 <section class="hero">
-  <div class="hero-eyebrow">Powered by Strategy Team · ANC</div>
+  <div class="hero-eyebrow">Powered by Deli ACI Strategy Team</div>
   <h1><span class="hero-greeting" id="hero-greeting">Good morning</span> — all your reports,<br /><span class="grad">one place</span></h1>
   <p>Access every dashboard instantly — click any card to open the full report in a new tab</p>
 </section>
@@ -1107,7 +1117,7 @@
 
 <!-- ── Footer ── -->
 <footer>
-  <p>Powered by <strong>Strategy Team</strong> · ANC</p>
+  <p>Powered by <strong>Deli ACI Strategy Team</strong></p>
 </footer>
 
 <!-- ── Password Modal ── -->
